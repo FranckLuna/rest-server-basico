@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors')
-const { dbConection } = require('../database/config')
+const { dbConnection } = require('../database/config')
 
 class Server {
 
@@ -8,7 +8,7 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.usuarioPath = '/api/usuarios';
-
+        this.authPath = '/api/auth';
         //conectar a la bd
         this.conectarDb();
 
@@ -20,7 +20,7 @@ class Server {
     };
     
     async conectarDb(){
-        await dbConection();
+        await dbConnection();
     };
 
     middlewares(){
@@ -34,6 +34,7 @@ class Server {
 
 //es importante que nuestros servicios siempre retornen un codigo de respuesta dependiendo de lo que suc
     routes(){
+       this.app.use( this.authPath, require('../routes/auth') );
        this.app.use( this.usuarioPath, require('../routes/usuarios') );
     };
 

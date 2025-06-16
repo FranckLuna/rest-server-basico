@@ -19,8 +19,8 @@ const UsuarioSchema = Schema({
     },
     rol:{
         type: String,
-        required: true,
-        enum: ['ADMIN_ROLE','USER_ROLE', 'VENTAS_ROLE']
+        required:  true,
+        //  ['ADMIN_ROLE','USER_ROLE', 'VENTAS_ROLE']
     },
     estado:{
         type: Boolean,
@@ -32,11 +32,11 @@ const UsuarioSchema = Schema({
     }
 });
 
-
 //me permite quitar __V y el password de la impresion
 UsuarioSchema.methods.toJSON = function() {
-    const { __v, password, ...usuario } = this.toObject();
+    const { __v, password, _id, ...usuario } = this.toObject();
+    usuario.uid = _id;
     return usuario;
-}
+};
 
 module.exports = model( 'Usuario', UsuarioSchema );

@@ -1,20 +1,15 @@
 const mongoose = require('mongoose');
 
-const dbConection = async() =>{
+const dbConnection = async () => {
     try {
-        
-        await mongoose.connect('mongodb://localhost:27017/cafeDb', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
-        console.log('Conectado a MongoDb');
-
+        await mongoose.connect('mongodb://localhost:27017/cafeDB');
+        console.log('Conectado a MongoDB');
     } catch (error) {
-        console.log(error);
+        console.error(error);
         throw new Error('Error al iniciar la DB');
     }
 };
 
 module.exports = {
-    dbConection
-}
+    dbConnection
+};
